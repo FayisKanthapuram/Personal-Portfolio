@@ -40,7 +40,7 @@ export default function About() {
             
             <h3 className="text-2xl font-semibold mb-4 text-white">Developer Profile</h3>
             <p className="text-gray-400 mb-6 leading-relaxed">
-              I am a highly motivated Full Stack Developer specializing in the MERN stack. I build scalable, high-performance web applications with modern architectures. My journey involves deep dives into React, Node.js, and cloud deployments.
+              I am a passionate MERN Stack Developer who enjoys solving real-world problems and building production-ready applications. I thrive on architecting scalable backend systems, designing intuitive user interfaces, and writing clean, maintainable code. Whether it's optimizing database queries or creating seamless frontend interactions, I am driven by the impact technology can make.
             </p>
             
             <div className="grid grid-cols-2 gap-4">

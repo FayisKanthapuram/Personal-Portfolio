@@ -5,13 +5,13 @@ import { useEffect, useState } from "react";
 import { Download, ChevronRight } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 
+import Image from "next/image";
+
 const roles = [
-  "Full Stack Developer",
   "MERN Stack Developer",
-  "JavaScript Engineer",
-  "Problem Solver",
-  "Building Scalable Web Apps",
-  "Continuous Learner"
+  "Full Stack Developer",
+  "React & Node Specialist",
+  "Building Scalable Apps"
 ];
 
 export default function Hero() {
@@ -84,8 +84,11 @@ export default function Hero() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.6 }}
-              className="h-12 flex items-center justify-center lg:justify-start mb-10"
+              className="flex flex-col items-center lg:items-start justify-center lg:justify-start mb-10"
             >
+              <p className="text-base md:text-lg text-gray-400 font-light mb-4 max-w-lg">
+                I build scalable, modern, and high-performance full-stack web applications using React, Node.js, Express, MongoDB, and TypeScript.
+              </p>
               <p className="text-xl md:text-3xl text-gray-400 font-light">
                 I am a{" "}
                 <span className="font-semibold text-white relative inline-block">
@@ -106,13 +109,17 @@ export default function Hero() {
             >
               <a href="#projects" className="group relative px-8 py-4 bg-white text-black font-bold rounded-full overflow-hidden transition-transform hover:scale-105 active:scale-95">
                 <span className="relative z-10 flex items-center gap-2">
-                  Explore Projects <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  View Projects <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </span>
                 <div className="absolute inset-0 bg-gradient-to-r from-gray-200 to-white opacity-0 group-hover:opacity-100 transition-opacity" />
               </a>
               
               <a href="/resume.pdf" target="_blank" className="px-8 py-4 rounded-full border border-white/20 hover:bg-white/10 transition-colors flex items-center gap-2 font-medium">
                 <Download className="w-4 h-4" /> Download Resume
+              </a>
+
+              <a href="#contact" className="px-8 py-4 rounded-full border border-transparent bg-white/5 hover:bg-white/10 transition-colors flex items-center gap-2 font-medium">
+                Contact Me
               </a>
               
               <div className="flex items-center gap-3 lg:ml-2">
@@ -173,12 +180,16 @@ export default function Hero() {
                 style={{ x: x1, y: y1 }}
                 className="relative w-full h-full z-20 flex items-end justify-center"
               >
-                <img
-                  src="/hero-processed.png"
-                  alt="Fayis Kanthapuram"
-                  className="w-full h-auto max-h-full object-contain object-bottom drop-shadow-[0_0_20px_rgba(0,240,255,0.1)]"
-                  style={{ maskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)', WebkitMaskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)' }}
-                />
+                <div className="relative w-full h-full drop-shadow-[0_0_20px_rgba(0,240,255,0.1)]" style={{ maskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)', WebkitMaskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)' }}>
+                  <Image
+                    src="/hero-processed.png"
+                    alt="Fayis Kanthapuram - MERN Stack Developer"
+                    fill
+                    priority
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="object-contain object-bottom"
+                  />
+                </div>
 
                 {/* Cinematic Overlays (Rim Lighting & Glows) */}
                 <div className="absolute inset-0 z-30 mix-blend-overlay opacity-80 pointer-events-none" style={{ maskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)', WebkitMaskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)' }}>

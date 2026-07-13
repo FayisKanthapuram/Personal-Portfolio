@@ -1,20 +1,24 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import dynamic from "next/dynamic";
 import Background from "@/components/ui/Background";
 import CustomCursor from "@/components/ui/CustomCursor";
 import FloatingNav from "@/components/ui/FloatingNav";
 import CommandPalette from "@/components/ui/CommandPalette";
 import BootSequence from "@/components/sections/BootSequence";
 import Hero from "@/components/sections/Hero";
-import About from "@/components/sections/About";
-import TechGalaxy from "@/components/sections/TechGalaxy";
-import Projects from "@/components/sections/Projects";
-import Journey from "@/components/sections/Journey";
-import GithubActivity from "@/components/sections/GithubActivity";
-import Skills from "@/components/sections/Skills";
-import Contact from "@/components/sections/Contact";
 import Lenis from "lenis";
+import { AnimatePresence } from "framer-motion";
+
+// Lazy load sections below the fold for better performance
+const About = dynamic(() => import("@/components/sections/About"), { ssr: false });
+const Skills = dynamic(() => import("@/components/sections/Skills"), { ssr: false });
+const Learning = dynamic(() => import("@/components/sections/Learning"), { ssr: false });
+const Projects = dynamic(() => import("@/components/sections/Projects"), { ssr: false });
+const Journey = dynamic(() => import("@/components/sections/Journey"), { ssr: false });
+const GithubActivity = dynamic(() => import("@/components/sections/GithubActivity"), { ssr: false });
+const Contact = dynamic(() => import("@/components/sections/Contact"), { ssr: false });
 
 export default function Home() {
   const [booting, setBooting] = useState(true);
@@ -48,8 +52,6 @@ export default function Home() {
   );
 }
 
-import { AnimatePresence } from "framer-motion";
-
 function AnimatePresenceWrapper({ booting, setBooting }: { booting: boolean; setBooting: (b: boolean) => void }) {
   return (
     <AnimatePresence mode="wait">
@@ -63,8 +65,8 @@ function AnimatePresenceWrapper({ booting, setBooting }: { booting: boolean; set
           
           <Hero />
           <About />
-          <TechGalaxy />
           <Skills />
+          <Learning />
           <Projects />
           <Journey />
           <GithubActivity />

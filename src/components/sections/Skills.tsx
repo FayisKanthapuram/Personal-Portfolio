@@ -1,19 +1,38 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { Monitor, Server, Database, Wrench } from "lucide-react";
 
-const skills = [
-  { name: "React / Next.js", level: 90, projects: 12, color: "#00f0ff" },
-  { name: "Node.js / Express", level: 85, projects: 15, color: "#00ff66" },
-  { name: "MongoDB", level: 80, projects: 10, color: "#47A248" },
-  { name: "TypeScript", level: 75, projects: 8, color: "#3178C6" },
-  { name: "Tailwind CSS", level: 95, projects: 20, color: "#38bdf8" },
-  { name: "Docker / AWS", level: 70, projects: 5, color: "#FF9900" },
+const skillCategories = [
+  {
+    title: "Frontend",
+    icon: Monitor,
+    skills: ["React", "Next.js", "TypeScript", "Tailwind CSS"],
+    color: "from-[var(--color-electric)]"
+  },
+  {
+    title: "Backend",
+    icon: Server,
+    skills: ["Node.js", "Express", "NestJS"],
+    color: "from-[#00ff66]"
+  },
+  {
+    title: "Database",
+    icon: Database,
+    skills: ["MongoDB", "PostgreSQL", "Redis"],
+    color: "from-[#47A248]"
+  },
+  {
+    title: "Tools",
+    icon: Wrench,
+    skills: ["Git", "GitHub", "Docker", "AWS", "Vercel", "Postman"],
+    color: "from-[var(--color-purple-neon)]"
+  }
 ];
 
 export default function Skills() {
   return (
-    <section className="py-24 relative z-10 bg-[#050505] border-t border-white/5">
+    <section id="skills" className="py-24 relative z-10 bg-[#050505] border-t border-white/5">
       <div className="container mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -21,67 +40,44 @@ export default function Skills() {
           viewport={{ once: true }}
           className="mb-16 text-center"
         >
+          <div className="w-12 h-1 bg-gradient-to-r from-[var(--color-electric)] to-transparent mx-auto mb-4" />
           <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-white">
-            Energy <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--color-electric)] to-[var(--color-cyan-neon)]">Core</span>
+            Tech <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--color-electric)] to-[var(--color-cyan-neon)]">Stack</span>
           </h2>
         </motion.div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
-          {skills.map((skill, idx) => {
-            const circumference = 2 * Math.PI * 40;
-            const strokeDashoffset = circumference - (skill.level / 100) * circumference;
-
-            return (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.1, type: "spring", stiffness: 100 }}
-                className="relative group flex flex-col items-center"
-              >
-                <div className="relative w-32 h-32 flex items-center justify-center mb-4">
-                  {/* Background Circle */}
-                  <svg className="w-full h-full transform -rotate-90">
-                    <circle
-                      cx="64"
-                      cy="64"
-                      r="40"
-                      stroke="rgba(255,255,255,0.05)"
-                      strokeWidth="6"
-                      fill="transparent"
-                    />
-                    {/* Progress Circle */}
-                    <motion.circle
-                      cx="64"
-                      cy="64"
-                      r="40"
-                      stroke={skill.color}
-                      strokeWidth="6"
-                      fill="transparent"
-                      strokeDasharray={circumference}
-                      initial={{ strokeDashoffset: circumference }}
-                      whileInView={{ strokeDashoffset }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 1.5, ease: "easeOut", delay: 0.5 + idx * 0.1 }}
-                      className="drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]"
-                    />
-                  </svg>
-                  <div className="absolute inset-0 flex items-center justify-center flex-col">
-                    <span className="text-2xl font-bold text-white">{skill.level}%</span>
-                  </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {skillCategories.map((category, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: idx * 0.1 }}
+              whileHover={{ y: -5 }}
+              className="glass-panel p-8 rounded-2xl border border-white/5 relative overflow-hidden group"
+            >
+              <div className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r ${category.color} to-transparent opacity-50`} />
+              
+              <div className="flex items-center gap-4 mb-6">
+                <div className="p-3 bg-white/5 rounded-xl text-gray-300 group-hover:text-white transition-colors">
+                  <category.icon className="w-6 h-6" />
                 </div>
+                <h3 className="text-xl font-semibold text-white">{category.title}</h3>
+              </div>
 
-                <h4 className="text-lg font-medium text-white mb-1 text-center">{skill.name}</h4>
-                
-                {/* Hover Details */}
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-12 opacity-0 group-hover:opacity-100 transition-opacity bg-black/90 border border-white/20 px-4 py-2 rounded-lg text-sm text-gray-300 pointer-events-none whitespace-nowrap z-20 backdrop-blur-md">
-                  Used in {skill.projects} projects
-                  <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 border-4 border-transparent border-t-black/90"></div>
-                </div>
-              </motion.div>
-            );
-          })}
+              <div className="flex flex-wrap gap-2">
+                {category.skills.map((skill, i) => (
+                  <span 
+                    key={i} 
+                    className="px-3 py-1.5 text-sm font-medium text-gray-400 bg-white/5 rounded-lg border border-white/5 hover:border-white/20 hover:text-white transition-colors cursor-default"
+                  >
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>

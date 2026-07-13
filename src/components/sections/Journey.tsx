@@ -3,11 +3,11 @@
 import { motion } from "framer-motion";
 
 const milestones = [
-  { year: "2021", title: "Started Programming", desc: "Wrote my first lines of code in C, discovering a passion for logic and problem solving." },
-  { year: "2022", title: "Learned JavaScript", desc: "Transitioned to the web, mastering JS fundamentals and DOM manipulation." },
-  { year: "2023", title: "Built MERN Apps", desc: "Developed full-stack capabilities with React, Node, Express, and MongoDB." },
-  { year: "2024", title: "System Design & Deployment", desc: "Focused on scalable architectures, AWS, Docker, and CI/CD pipelines." },
-  { year: "Future", title: "AI & SaaS Development", desc: "Exploring AI integration, next-gen SaaS platforms, and distributed systems." },
+  { year: "1", title: "Started Web Development", desc: "Wrote my first lines of code, discovering a passion for logic, UI, and problem solving." },
+  { year: "2", title: "Learned MERN Stack", desc: "Developed full-stack capabilities with React, Node.js, Express, and MongoDB." },
+  { year: "3", title: "Built Mobiverse", desc: "Engineered a comprehensive e-commerce platform handling complex state and database operations." },
+  { year: "4", title: "Built Production Management System", desc: "Developed a robust ERP solution for Diamond Pappadam to manage large-scale data." },
+  { year: "5", title: "Learning System Design & Cloud", desc: "Currently focusing on AWS, Docker, and designing scalable microservices architectures." },
 ];
 
 export default function Journey() {
@@ -58,7 +58,7 @@ export default function Journey() {
                 {/* Node */}
                 <div className="absolute left-0 md:relative md:left-auto w-14 h-14 rounded-full bg-black border-2 border-[var(--color-electric)] flex items-center justify-center z-10 shadow-[0_0_20px_rgba(0,240,255,0.3)]">
                   <div className="w-8 h-8 rounded-full bg-[var(--color-electric)]/20 flex items-center justify-center text-xs font-bold text-white">
-                    {milestone.year === "Future" ? "∞" : milestone.year.slice(2)}
+                    {milestone.year}
                   </div>
                 </div>
 
