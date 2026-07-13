@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Send, Terminal, Key, MapPin, Mail, FileText, CheckCircle } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 import { useState } from "react";
 
 export default function Contact() {
@@ -95,6 +96,9 @@ export default function Contact() {
                   </a>
                   <a href="https://www.linkedin.com/in/fayis-kanthapuram/" target="_blank" rel="noreferrer" className="w-12 h-12 bg-white/5 hover:bg-white/10 transition-colors rounded-xl flex items-center justify-center text-gray-400 hover:text-[var(--color-electric)]">
                     <FaLinkedin className="w-5 h-5" />
+                  </a>
+                  <a href="https://x.com/FKanthapuram" target="_blank" rel="noreferrer" className="w-12 h-12 bg-white/5 hover:bg-white/10 transition-colors rounded-xl flex items-center justify-center text-gray-400 hover:text-[var(--color-electric)]">
+                    <FaXTwitter className="w-5 h-5" />
                   </a>
                   <a href="/resume.pdf" target="_blank" className="h-12 px-4 bg-white/5 hover:bg-white/10 transition-colors rounded-xl flex items-center justify-center text-gray-400 hover:text-white gap-2 text-sm font-medium">
                     <FileText className="w-4 h-4" /> Resume
