@@ -13,13 +13,13 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://fayiskanthapuram.com"),
+  metadataBase: new URL("https://fayis-kanthapuram.vercel.app"),
   title: "Fayis Kanthapuram | MERN Stack Developer",
   description: "Portfolio of Fayis Kanthapuram, a passionate MERN Stack Developer building scalable, modern, and high-performance web applications using React, Node.js, and MongoDB.",
   openGraph: {
     title: "Fayis Kanthapuram | MERN Stack Developer",
     description: "Portfolio of Fayis Kanthapuram, a passionate MERN Stack Developer building scalable, modern, and high-performance web applications.",
-    url: "https://fayiskanthapuram.com",
+    url: "https://fayis-kanthapuram.vercel.app",
     siteName: "Fayis Kanthapuram Portfolio",
     images: [
       {

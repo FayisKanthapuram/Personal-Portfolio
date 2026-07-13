@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: '/api/',
     },
-    sitemap: 'https://fayiskanthapuram.com/sitemap.xml',
+    sitemap: 'https://fayis-kanthapuram.vercel.app/sitemap.xml',
   }
 }
