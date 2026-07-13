@@ -14,24 +14,10 @@ interface GitHubStats {
 
 export default function GithubActivity() {
   const [stats, setStats] = useState<GitHubStats | null>(null);
-  const [stars, setStars] = useState<number | null>(null);
-
   useEffect(() => {
-    // Fetch basic stats for repository count
     fetch('https://api.github.com/users/FayisKanthapuram')
       .then(res => res.json())
       .then(data => setStats(data))
-      .catch(console.error);
-
-    // Fetch repositories to calculate total stars
-    fetch('https://api.github.com/users/FayisKanthapuram/repos?per_page=100')
-      .then(res => res.json())
-      .then(repos => {
-        if (Array.isArray(repos)) {
-          const totalStars = repos.reduce((acc: number, repo: any) => acc + repo.stargazers_count, 0);
-          setStars(totalStars);
-        }
-      })
       .catch(console.error);
   }, []);
 
@@ -84,10 +70,10 @@ export default function GithubActivity() {
             className="flex flex-col gap-4"
           >
             {[
-              { label: "Total Commits", value: "1,245+", icon: GitCommit, color: "text-[#2ea043]" },
-              { label: "Pull Requests", value: "142+", icon: GitPullRequest, color: "text-blue-400" },
-              { label: "Repositories", value: stats?.public_repos !== undefined ? stats.public_repos : "...", icon: GitBranch, color: "text-purple-400" },
-              { label: "Stars Earned", value: stars !== null ? stars : "...", icon: Star, color: "text-yellow-400" },
+              { label: "Repositories", value: stats?.public_repos !== undefined ? stats.public_repos : "...", icon: GitBranch, color: "text-[#2ea043]" },
+              { label: "Followers", value: stats?.followers !== undefined ? stats.followers : "...", icon: Star, color: "text-blue-400" },
+              { label: "Following", value: stats?.following !== undefined ? stats.following : "...", icon: GitPullRequest, color: "text-purple-400" },
+              { label: "Gists", value: stats?.public_gists !== undefined ? stats.public_gists : "...", icon: GitCommit, color: "text-yellow-400" },
             ].map((stat, idx) => (
               <div key={idx} className="glass-panel p-6 rounded-xl border border-white/5 flex items-center gap-4 hover:border-white/20 transition-colors group cursor-default flex-1">
                 <div className={`p-4 rounded-xl bg-white/5 group-hover:bg-white/10 transition-colors ${stat.color}`}>
