@@ -70,7 +70,13 @@ function AnimatePresenceWrapper({ booting, setBooting }: { booting: boolean; set
           <GithubActivity />
           <Contact />
           
-          <footer className="py-8 border-t border-white/10 bg-[#050505] text-center font-mono text-sm text-gray-500">
+          <footer className="py-8 border-t border-white/10 bg-[#050505] flex flex-col items-center justify-center font-mono text-sm text-gray-500">
+            <div className="flex flex-col md:flex-row items-center gap-4 mb-4">
+              <div className="flex items-center cursor-pointer opacity-70 hover:opacity-100 transition-opacity" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+                <span className="text-xl font-black text-[var(--color-electric)] tracking-tighter">F</span>
+                <span className="text-xl font-black text-[var(--color-purple-neon)] tracking-tighter">&lt;</span>
+              </div>
+            </div>
             <p className="mb-2">{"> Built with Next.js + Tailwind + Framer Motion"}</p>
             <p>{"> Designed & Developed by Fayis Kanthapuram"}</p>
           </footer>
