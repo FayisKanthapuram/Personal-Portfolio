@@ -71,6 +71,12 @@ export default function FloatingNav() {
           transition={{ duration: 0.3 }}
           className="fixed top-6 left-1/2 -translate-x-1/2 z-50 glass-panel rounded-full px-6 py-3 flex items-center gap-2 md:gap-4 shadow-[0_0_20px_rgba(0,240,255,0.1)]"
         >
+          {/* F< Logo */}
+          <div className="flex items-center cursor-pointer mr-2 pr-4 border-r border-white/10 hidden md:flex" onClick={() => scrollTo('#home')}>
+            <span className="text-xl font-black text-[var(--color-electric)] tracking-tighter">F</span>
+            <span className="text-xl font-black text-[var(--color-purple-neon)] tracking-tighter">&lt;</span>
+          </div>
+          
           {navItems.map((item) => {
             const isActive = activeSection === item.name.toLowerCase();
             return (
