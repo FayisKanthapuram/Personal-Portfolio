@@ -91,13 +91,13 @@ export default function Contact() {
                 <div className="w-full h-px bg-white/10 my-2" />
 
                 <div className="flex items-center gap-4">
-                  <a href="https://github.com/FayisKanthapuram" target="_blank" rel="noreferrer" className="w-12 h-12 bg-white/5 hover:bg-white/10 transition-colors rounded-xl flex items-center justify-center text-gray-400 hover:text-white">
+                  <a href="https://github.com/FayisKanthapuram" target="_blank" rel="noreferrer" aria-label="GitHub Profile" className="w-12 h-12 bg-white/5 hover:bg-white/10 transition-colors rounded-xl flex items-center justify-center text-gray-400 hover:text-white">
                     <FaGithub className="w-5 h-5" />
                   </a>
-                  <a href="https://www.linkedin.com/in/fayis-kanthapuram/" target="_blank" rel="noreferrer" className="w-12 h-12 bg-white/5 hover:bg-white/10 transition-colors rounded-xl flex items-center justify-center text-gray-400 hover:text-[var(--color-electric)]">
+                  <a href="https://www.linkedin.com/in/fayis-kanthapuram/" target="_blank" rel="noreferrer" aria-label="LinkedIn Profile" className="w-12 h-12 bg-white/5 hover:bg-white/10 transition-colors rounded-xl flex items-center justify-center text-gray-400 hover:text-[var(--color-electric)]">
                     <FaLinkedin className="w-5 h-5" />
                   </a>
-                  <a href="https://x.com/FKanthapuram" target="_blank" rel="noreferrer" className="w-12 h-12 bg-white/5 hover:bg-white/10 transition-colors rounded-xl flex items-center justify-center text-gray-400 hover:text-[var(--color-electric)]">
+                  <a href="https://x.com/FKanthapuram" target="_blank" rel="noreferrer" aria-label="X (Twitter) Profile" className="w-12 h-12 bg-white/5 hover:bg-white/10 transition-colors rounded-xl flex items-center justify-center text-gray-400 hover:text-[var(--color-electric)]">
                     <FaXTwitter className="w-5 h-5" />
                   </a>
                   <a href="/resume.pdf" target="_blank" className="h-12 px-4 bg-white/5 hover:bg-white/10 transition-colors rounded-xl flex items-center justify-center text-gray-400 hover:text-white gap-2 text-sm font-medium">
@@ -133,11 +133,12 @@ export default function Contact() {
 
               <form onSubmit={handleSubmit} className="p-8 flex flex-col gap-6 relative z-10 bg-black/40 h-[calc(100%-45px)]">
                 <div className="flex flex-col gap-2 group">
-                  <label className="text-xs font-mono text-[var(--color-electric)] uppercase tracking-wider flex items-center gap-2">
+                  <label htmlFor="name" className="text-xs font-mono text-[var(--color-electric)] uppercase tracking-wider flex items-center gap-2">
                     <Key className="w-3 h-3" /> Identity
                   </label>
                   <input
                     type="text"
+                    id="name"
                     required
                     value={formState.name}
                     onChange={(e) => setFormState({ ...formState, name: e.target.value })}
@@ -147,11 +148,12 @@ export default function Contact() {
                 </div>
 
                 <div className="flex flex-col gap-2 group">
-                  <label className="text-xs font-mono text-[var(--color-electric)] uppercase tracking-wider flex items-center gap-2">
+                  <label htmlFor="email" className="text-xs font-mono text-[var(--color-electric)] uppercase tracking-wider flex items-center gap-2">
                     <Key className="w-3 h-3" /> Origin (Email)
                   </label>
                   <input
                     type="email"
+                    id="email"
                     required
                     value={formState.email}
                     onChange={(e) => setFormState({ ...formState, email: e.target.value })}
@@ -161,10 +163,11 @@ export default function Contact() {
                 </div>
 
                 <div className="flex flex-col gap-2 group flex-grow">
-                  <label className="text-xs font-mono text-[var(--color-electric)] uppercase tracking-wider flex items-center gap-2">
+                  <label htmlFor="message" className="text-xs font-mono text-[var(--color-electric)] uppercase tracking-wider flex items-center gap-2">
                     <Key className="w-3 h-3" /> Payload (Message)
                   </label>
                   <textarea
+                    id="message"
                     required
                     value={formState.message}
                     onChange={(e) => setFormState({ ...formState, message: e.target.value })}

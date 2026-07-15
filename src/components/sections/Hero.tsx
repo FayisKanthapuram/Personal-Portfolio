@@ -124,13 +124,13 @@ export default function Hero() {
               </a>
               
               <div className="flex items-center gap-3 lg:ml-2">
-                <a href="https://github.com/FayisKanthapuram" target="_blank" rel="noreferrer" className="p-4 rounded-full border border-white/20 hover:bg-white/10 hover:text-[var(--color-electric)] transition-colors">
+                <a href="https://github.com/FayisKanthapuram" target="_blank" rel="noreferrer" aria-label="GitHub Profile" className="p-4 rounded-full border border-white/20 hover:bg-white/10 hover:text-[var(--color-electric)] transition-colors">
                   <FaGithub className="w-5 h-5" />
                 </a>
-                <a href="https://www.linkedin.com/in/fayis-kanthapuram/" target="_blank" rel="noreferrer" className="p-4 rounded-full border border-white/20 hover:bg-white/10 hover:text-[var(--color-electric)] transition-colors">
+                <a href="https://www.linkedin.com/in/fayis-kanthapuram/" target="_blank" rel="noreferrer" aria-label="LinkedIn Profile" className="p-4 rounded-full border border-white/20 hover:bg-white/10 hover:text-[var(--color-electric)] transition-colors">
                   <FaLinkedin className="w-5 h-5" />
                 </a>
-                <a href="https://x.com/FKanthapuram" target="_blank" rel="noreferrer" className="p-4 rounded-full border border-white/20 hover:bg-white/10 hover:text-[var(--color-electric)] transition-colors">
+                <a href="https://x.com/FKanthapuram" target="_blank" rel="noreferrer" aria-label="X (Twitter) Profile" className="p-4 rounded-full border border-white/20 hover:bg-white/10 hover:text-[var(--color-electric)] transition-colors">
                   <FaXTwitter className="w-5 h-5" />
                 </a>
               </div>

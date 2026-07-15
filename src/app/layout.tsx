@@ -14,19 +14,25 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://fayis-kanthapuram.vercel.app"),
-  title: "Fayis Kanthapuram | MERN Stack Developer",
-  description: "Portfolio of Fayis Kanthapuram, a passionate MERN Stack Developer building scalable, modern, and high-performance web applications using React, Node.js, and MongoDB.",
+  title: "Fayis Kanthapuram | MERN Stack Developer & Software Engineer",
+  description: "Portfolio of Fayis Kanthapuram, a passionate MERN Stack Developer specializing in React.js, Node.js, Express, MongoDB, and TypeScript. View my latest projects and skills.",
+  keywords: ["Fayis Kanthapuram", "MERN Stack Developer", "Full Stack Developer", "React Developer", "Node.js Developer", "Web Developer in Kerala", "TypeScript", "Next.js Portfolio", "Software Engineer"],
+  authors: [{ name: "Fayis Kanthapuram", url: "https://fayis-kanthapuram.vercel.app" }],
+  creator: "Fayis Kanthapuram",
+  alternates: {
+    canonical: "https://fayis-kanthapuram.vercel.app/",
+  },
   openGraph: {
-    title: "Fayis Kanthapuram | MERN Stack Developer",
-    description: "Portfolio of Fayis Kanthapuram, a passionate MERN Stack Developer building scalable, modern, and high-performance web applications.",
+    title: "Fayis Kanthapuram | Premium MERN Stack Developer",
+    description: "Explore the futuristic portfolio of Fayis Kanthapuram. I build highly scalable, interactive, and modern web applications.",
     url: "https://fayis-kanthapuram.vercel.app",
     siteName: "Fayis Kanthapuram Portfolio",
     images: [
       {
-        url: "/og-image.png", // Will default to a generic if missing, but good practice
+        url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Fayis Kanthapuram Portfolio",
+        alt: "Fayis Kanthapuram - MERN Stack Developer Portfolio",
       },
     ],
     locale: "en_US",
@@ -35,7 +41,8 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Fayis Kanthapuram | MERN Stack Developer",
-    description: "Portfolio of Fayis Kanthapuram, a passionate MERN Stack Developer.",
+    description: "I build highly scalable, interactive, and modern web applications.",
+    creator: "@FKanthapuram",
     images: ["/og-image.png"],
   },
   robots: {
@@ -49,6 +56,31 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+  icons: {
+    icon: [
+      { url: '/favicon.ico' },
+      { url: '/icon.png', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/apple-touch-icon.png' },
+    ],
+  },
+  manifest: '/manifest.webmanifest',
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Fayis Kanthapuram",
+  jobTitle: "MERN Stack Developer",
+  url: "https://fayis-kanthapuram.vercel.app",
+  sameAs: [
+    "https://github.com/FayisKanthapuram",
+    "https://www.linkedin.com/in/fayis-kanthapuram/",
+    "https://x.com/FKanthapuram"
+  ],
+  knowsAbout: ["React", "Node.js", "Express", "MongoDB", "Next.js", "TypeScript", "Tailwind CSS"],
+  alumniOf: "Brototype"
 };
 
 export default function RootLayout({
@@ -61,6 +93,10 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${jetbrainsMono.variable} antialiased bg-black text-white min-h-screen`}
       >
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         {children}
       </body>
     </html>
