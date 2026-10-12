@@ -14,7 +14,7 @@
 ## Decisions and corrections
 
 - Name, Kerala location, email, GitHub, LinkedIn, and X links come from the original portfolio and/or user brief. LinkedIn and X account ownership were not independently authenticated.
-- Removed unsupported experience/project counts, scalability claims, and the missing `/resume.pdf` link. No résumé file existed in the repository.
+- Removed unsupported experience/project counts and scalability claims. Added an ATS-friendly, project-focused résumé at `/resume.pdf` and `/resume.docx`; employment, education, and certification details remain omitted because no verified information was available.
 - Mobiverse uses session-based authentication with Passport Google OAuth, not the JWT claim in the old portfolio. Its payment service verifies a Razorpay signature and uses a Mongoose transaction for stock and order writes. This describes implementation, not an independent security certification or proof of real payment processing.
 - Diamond is production/payroll management, not a verified multi-tenant ERP. The implementation supports production entries, admin approval/rejection, stored rates, salary payments, and role-specific views. Removed unsupported inventory and large-scale performance claims. Avoided repeating the README's outdated “today-only edits” rule, since current source uses ownership and approval status.
 - DailyOS has meaningful frontend/backend/data-model work. Recurring templates and schedule history are implemented in NestJS/Prisma; PostgreSQL and TypeScript have direct source evidence.

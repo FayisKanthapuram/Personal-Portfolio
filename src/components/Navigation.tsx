@@ -54,6 +54,9 @@ export default function Navigation() {
         <a href="#approach" onClick={() => setOpen(false)}>
           Approach
         </a>
+        <a href="/resume.pdf" target="_blank" rel="noreferrer">
+          Resume <span aria-hidden="true">↗</span>
+        </a>
         <a
           className="nav-contact"
           href="#contact"

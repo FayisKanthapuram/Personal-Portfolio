@@ -293,9 +293,20 @@ img {
 }
 .hero-actions {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 28px;
   margin-top: 29px;
+}
+.resume-word-link {
+  margin-top: 12px;
+  font-size: 11px;
+  color: var(--muted);
+}
+.resume-word-link a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 .hero-art {
   position: relative;

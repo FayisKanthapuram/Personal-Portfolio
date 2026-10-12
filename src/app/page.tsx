@@ -39,6 +39,9 @@ export default function Home() {
               <a className="button" href="#work">
                 Explore my work <span aria-hidden="true">↘</span>
               </a>
+              <a className="text-link" href="/resume.pdf" download>
+                Download CV <span aria-hidden="true">↓</span>
+              </a>
               <a
                 className="text-link"
                 href={identity.github}
@@ -48,6 +51,9 @@ export default function Home() {
                 GitHub <span aria-hidden="true">↗</span>
               </a>
             </div>
+            <p className="resume-word-link">
+              Need an editable copy? <a href="/resume.docx" download>Download Word version</a>
+            </p>
           </div>
           <div className="hero-art">
             <div className="portrait-frame">
