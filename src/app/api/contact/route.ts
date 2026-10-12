@@ -1,108 +1,115 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 
+export const runtime = "nodejs";
+const configured = () =>
+  Boolean(process.env.EMAIL_USER && process.env.EMAIL_PASS);
+export async function GET() {
+  return NextResponse.json(
+    { available: configured() },
+    { headers: { "Cache-Control": "no-store" } },
+  );
+}
 export async function POST(req: Request) {
+  if (!req.headers.get("content-type")?.includes("application/json")) {
+    return NextResponse.json(
+      { error: "Please send a valid message." },
+      { status: 415 },
+    );
+  }
+  const origin = req.headers.get("origin");
+  if (origin && origin !== new URL(req.url).origin) {
+    return NextResponse.json(
+      { error: "Please use the contact form on this site." },
+      { status: 403 },
+    );
+  }
+  // Bound the streamed body too; Content-Length can be absent or misleading.
+  const reader = req.body?.getReader();
+  if (!reader)
+    return NextResponse.json({ error: "Missing message." }, { status: 400 });
+  let raw = "";
+  let bytes = 0;
+  const decoder = new TextDecoder();
   try {
-    const { name, email, message } = await req.json();
-
-    if (!name || !email || !message) {
+    while (true) {
+      const { value, done } = await reader.read();
+      if (done) break;
+      bytes += value.byteLength;
+      if (bytes > 24000) {
+        await reader.cancel();
+        return NextResponse.json(
+          { error: "Your message is too long." },
+          { status: 413 },
+        );
+      }
+      raw += decoder.decode(value, { stream: true });
+    }
+    raw += decoder.decode();
+    const data = JSON.parse(raw);
+    if (!data || typeof data !== "object" || Array.isArray(data))
+      throw new Error("Invalid body");
+    const { name, email, message, website } = data;
+    if (website)
       return NextResponse.json(
-        { error: "Missing required fields" },
-        { status: 400 }
+        { error: "Please leave the website field empty." },
+        { status: 400 },
+      );
+    if (
+      typeof name !== "string" ||
+      typeof email !== "string" ||
+      typeof message !== "string" ||
+      !name.trim() ||
+      name.length > 100 ||
+      /[\r\n]/.test(name) ||
+      email.length > 254 ||
+      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ||
+      message.trim().length < 10 ||
+      message.length > 5000
+    ) {
+      return NextResponse.json(
+        {
+          error:
+            "Add a name, valid email, and a message of 10–5,000 characters.",
+        },
+        { status: 400 },
       );
     }
-
-    // Basic sanitization to prevent HTML injection / XSS
-    const sanitize = (str: string) => {
-      return str
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-    };
-
-    const safeName = sanitize(name);
-    const safeEmail = sanitize(email);
-    const safeMessage = sanitize(message);
-
-    // Ensure environment variables exist
-    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+    if (!configured()) {
       return NextResponse.json(
-        { error: "Server configuration error: Missing email credentials" },
-        { status: 500 }
+        {
+          error:
+            "The form is unavailable. Please email fayiskanthapuram@gmail.com instead.",
+        },
+        { status: 503 },
       );
     }
-
-    // Configure Nodemailer transporter using Gmail
     const transporter = nodemailer.createTransport({
       service: "gmail",
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      },
+      auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASS },
+      connectionTimeout: 10000,
+      socketTimeout: 15000,
     });
-
-    const mailOptions = {
-      from: process.env.EMAIL_USER,
-      to: process.env.EMAIL_USER, // Sends the email to yourself
-      replyTo: email,
-      subject: `New Portfolio Contact from ${safeName}`,
-      text: `Name: ${safeName}\nEmail: ${safeEmail}\n\nMessage:\n${safeMessage}`,
-      html: `
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-          <meta charset="UTF-8">
-          <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <title>New Contact Message</title>
-        </head>
-        <body style="font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f4f4f5; color: #18181b; margin: 0; padding: 40px 20px; line-height: 1.6;">
-          <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);">
-            
-            <!-- Header -->
-            <div style="background: linear-gradient(135deg, #00f0ff 0%, #b538ff 100%); padding: 30px 40px; text-align: center;">
-              <h2 style="color: #ffffff; margin: 0; font-size: 24px; font-weight: 700; letter-spacing: 0.5px;">New Connection Established</h2>
-              <p style="color: rgba(255, 255, 255, 0.9); margin: 8px 0 0 0; font-size: 14px;">Incoming message from your portfolio</p>
-            </div>
-
-            <!-- Content -->
-            <div style="padding: 40px;">
-              <div style="margin-bottom: 24px;">
-                <p style="margin: 0 0 4px 0; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: #71717a; font-weight: 600;">Sender Identity</p>
-                <p style="margin: 0; font-size: 18px; font-weight: 600; color: #27272a;">${safeName}</p>
-              </div>
-
-              <div style="margin-bottom: 32px;">
-                <p style="margin: 0 0 4px 0; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: #71717a; font-weight: 600;">Reply-To Address</p>
-                <a href="mailto:${safeEmail}" style="margin: 0; font-size: 16px; color: #00bcd4; text-decoration: none; font-weight: 500;">${safeEmail}</a>
-              </div>
-
-              <div style="background-color: #fafafa; border: 1px solid #e4e4e7; border-radius: 8px; padding: 24px;">
-                <p style="margin: 0 0 16px 0; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: #71717a; font-weight: 600;">Message Payload</p>
-                <div style="margin: 0; font-size: 15px; color: #3f3f46; white-space: pre-wrap;">${safeMessage}</div>
-              </div>
-            </div>
-
-            <!-- Footer -->
-            <div style="background-color: #fafafa; border-top: 1px solid #e4e4e7; padding: 20px 40px; text-align: center;">
-              <p style="margin: 0; font-size: 12px; color: #a1a1aa;">Sent securely from your Next.js Portfolio Terminal.</p>
-            </div>
-            
-          </div>
-        </body>
-        </html>
-      `,
-    };
-
-    await transporter.sendMail(mailOptions);
-
-    return NextResponse.json({ success: true }, { status: 200 });
-  } catch (error) {
-    console.error("Error sending email:", error);
+    try {
+      // Plain text prevents HTML injection; the verified sender remains the From address.
+      await transporter.sendMail({
+        from: process.env.EMAIL_USER,
+        to: process.env.EMAIL_USER,
+        replyTo: email.trim(),
+        subject: `Portfolio message from ${name.trim()}`,
+        text: `Name: ${name.trim()}\nEmail: ${email.trim()}\n\n${message.trim()}`,
+      });
+      return NextResponse.json({ success: true });
+    } catch {
+      return NextResponse.json(
+        { error: "Your message could not be sent. Please try email instead." },
+        { status: 502 },
+      );
+    }
+  } catch {
     return NextResponse.json(
-      { error: "Failed to send message. Please try again later." },
-      { status: 500 }
+      { error: "Please send a valid message." },
+      { status: 400 },
     );
   }
 }

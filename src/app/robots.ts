@@ -1,11 +1,8 @@
-import { MetadataRoute } from 'next'
-
+import type { MetadataRoute } from "next";
+import { identity } from "@/data/portfolio";
 export default function robots(): MetadataRoute.Robots {
   return {
-    rules: {
-      userAgent: '*',
-      allow: '/',
-    },
-    sitemap: 'https://fayis-kanthapuram.vercel.app/sitemap.xml',
-  }
+    rules: { userAgent: "*", allow: "/", disallow: "/api/" },
+    sitemap: `${identity.url}/sitemap.xml`,
+  };
 }

@@ -1,12 +1,5 @@
-import { MetadataRoute } from 'next'
-
+import type { MetadataRoute } from "next";
+import { identity } from "@/data/portfolio";
 export default function sitemap(): MetadataRoute.Sitemap {
-  return [
-    {
-      url: 'https://fayis-kanthapuram.vercel.app',
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 1,
-    }
-  ]
+  return [{ url: `${identity.url}/`, changeFrequency: "monthly", priority: 1 }];
 }

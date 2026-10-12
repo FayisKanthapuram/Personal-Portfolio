@@ -1,68 +1,67 @@
-# 🚀 Futuristic Developer Portfolio
+# Fayis Kanthapuram — Personal Portfolio
 
-A high-performance, immersive, and interactive personal portfolio built for modern web standards. Designed with a premium "Cyberpunk Developer Workspace" aesthetic to stand out and deliver an Awwwards-caliber user experience.
+A complete editorial redesign of Fayis’s developer portfolio: warm ivory, charcoal, vermilion accents, real photography, and project-specific visual studies. Built with Next.js App Router, React, TypeScript, and a responsive CSS design system.
 
-## ✨ Features
+## Local development
 
-- **Cinematic Boot Sequence**: A mock terminal boot-up animation that loads before revealing the site.
-- **Immersive 3D/Animated UI**: Hardware-accelerated animations using Framer Motion and custom Canvas graphics.
-- **Tech Galaxy**: An interactive, rotating orbital diagram showcasing core technologies.
-- **Command Palette (`Ctrl+K`)**: A searchable, keyboard-driven navigation menu for power users.
-- **Custom Cursor & Floating Nav**: Glassmorphic UI elements that adapt to user interaction.
-- **Secure Contact Console**: A built-in NodeMailer API route secured against XSS injection to send emails directly to your inbox.
-- **Responsive & Optimized**: Built with Next.js 16 and Tailwind CSS v4, compiled via Turbopack for lightning-fast speeds.
-
-## 🛠️ Tech Stack
-
-- **Framework:** [Next.js](https://nextjs.org/) (App Router)
-- **Styling:** [Tailwind CSS v4](https://tailwindcss.com/)
-- **Animations:** [Framer Motion](https://www.framer.com/motion/) & [Lenis](https://lenis.studiofreight.com/) (Smooth Scrolling)
-- **Icons:** [Lucide React](https://lucide.dev/) & [React Icons](https://react-icons.github.io/react-icons/)
-- **Backend:** Next.js Route Handlers + [Nodemailer](https://nodemailer.com/)
-- **Language:** TypeScript
-
-## 🚀 Getting Started
-
-Follow these steps to run the project locally.
-
-### 1. Clone the repository
-
-```bash
-git clone https://github.com/FayisKanthapuram/Portfolio.git
-cd Portfolio
-```
-
-### 2. Install dependencies
-
-```bash
-npm install
-```
-
-### 3. Configure Environment Variables
-
-Create a `.env.local` file in the root of the project and add your Gmail credentials for the contact form:
-
-```env
-# Your Gmail Address
-EMAIL_USER="your-email@gmail.com"
-
-# Your 16-character Google App Password (NOT your normal password)
-# Generate at: Google Account > Security > 2-Step Verification > App passwords
-EMAIL_PASS="your-app-password"
-```
-
-### 4. Run the development server
-
-```bash
+```sh
+npm ci
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser to view the portfolio.
+Open the localhost URL printed by Next.js. If port 3000 is occupied:
 
-## 🌐 Deployment
+```sh
+npm run dev -- --port 3017
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new). Make sure to add your `EMAIL_USER` and `EMAIL_PASS` to the Environment Variables section in your Vercel project settings.
+## Checks
 
-## 📄 License
+```sh
+npm run lint
+npm run typecheck
+npm run build
+```
 
-This project is open-source and available under the MIT License.
+The page is server-rendered. Only navigation and the optional contact form need client components. Case-study disclosures use native HTML. There is no boot screen, animation framework, cursor replacement, 3D runtime, analytics, or GitHub API dependency.
+
+## Contact
+
+The published email and profile links work without configuration. The existing Nodemailer backend is retained and validated. The form checks `/api/contact` before showing inputs and falls back to a direct email link when the service is not configured.
+
+To enable delivery, set the following **server-only** environment variables in Vercel (or `.env.local` during development):
+
+```text
+EMAIL_USER=your Gmail address
+EMAIL_PASS=your Gmail app password
+```
+
+Never use a `NEXT_PUBLIC_` prefix or commit actual credentials. `.env.example` documents the keys. The endpoint validates input types and lengths, bounds the body size, rejects cross-origin browser requests and a populated honeypot, and sends plain text. Success is shown only after SMTP accepts the message. Delivery requires valid SMTP credentials and has not been verified without them.
+
+## Editing
+
+- `src/data/portfolio.ts`: identity, project descriptions, verified links, and skills.
+- `src/app/page.tsx`: server-rendered sections and editorial copy.
+- `src/app/globals.css`: design tokens, component styles, responsive breakpoints, reduced-motion behavior.
+- `src/components/ProjectVisual.tsx`: concept illustrations (not application screenshots).
+- `public/images/`: optimized versions of the supplied photographs.
+- `docs/CONTENT-AUDIT.md`: source evidence, content corrections, and unavailable project information.
+- `docs/QA.md`: verification results and limits.
+
+## Vercel deployment
+
+Retains the Next.js framework and original canonical domain: **https://fayis-kanthapuram.vercel.app/**.
+
+1. Connect/push this repository to the existing Vercel project.
+2. Use the Next.js preset, `npm run build`, and default output directory. Use Node.js 22 or a currently supported newer LTS.
+3. Add the optional email variables if form delivery is desired.
+4. After deployment, confirm `/`, `/robots.txt`, `/sitemap.xml`, `/og-image.png`, `/icon.svg`, `/manifest.webmanifest`, and the preserved Google verification file return successfully.
+5. Verify email delivery once with real credentials if enabling the form.
+
+No deployment or GitHub push is performed as part of this local redesign. No additional database or backend service is needed.
+
+## SEO and indexing
+
+The server-rendered page includes the full-name H1, descriptive title and meta description, canonical URL, Person and WebSite JSON-LD, social preview, sitemap, robots, and icons. Existing Google Search Console verification is preserved.
+
+After deployment, submit `https://fayis-kanthapuram.vercel.app/sitemap.xml` in Google Search Console, inspect the homepage URL, and request indexing. Keep the same identity and portfolio URL on GitHub and LinkedIn. These steps enable discovery; they do not guarantee search rankings.

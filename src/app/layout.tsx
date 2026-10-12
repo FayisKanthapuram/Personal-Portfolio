@@ -1,101 +1,88 @@
-import type { Metadata } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { identity } from "@/data/portfolio";
 import "./globals.css";
 
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  variable: "--font-jetbrains",
-  subsets: ["latin"],
-});
-
+const description =
+  "Fayis Kanthapuram is a full stack developer in Kerala, India, building practical web applications with React, Node.js, TypeScript, and thoughtful engineering.";
 export const metadata: Metadata = {
-  metadataBase: new URL("https://fayis-kanthapuram.vercel.app"),
-  title: "Fayis Kanthapuram | MERN Stack Developer & Software Engineer",
-  description: "Portfolio of Fayis Kanthapuram, a passionate MERN Stack Developer specializing in React.js, Node.js, Express, MongoDB, and TypeScript. View my latest projects and skills.",
-  keywords: ["Fayis Kanthapuram", "MERN Stack Developer", "Full Stack Developer", "React Developer", "Node.js Developer", "Web Developer in Kerala", "TypeScript", "Next.js Portfolio", "Software Engineer"],
-  authors: [{ name: "Fayis Kanthapuram", url: "https://fayis-kanthapuram.vercel.app" }],
-  creator: "Fayis Kanthapuram",
-  alternates: {
-    canonical: "https://fayis-kanthapuram.vercel.app/",
-  },
+  metadataBase: new URL(identity.url),
+  title: "Fayis Kanthapuram | Full Stack Developer Portfolio",
+  description,
+  authors: [{ name: identity.name, url: identity.url }],
+  alternates: { canonical: "/" },
   openGraph: {
-    title: "Fayis Kanthapuram | Premium MERN Stack Developer",
-    description: "Explore the futuristic portfolio of Fayis Kanthapuram. I build highly scalable, interactive, and modern web applications.",
-    url: "https://fayis-kanthapuram.vercel.app",
-    siteName: "Fayis Kanthapuram Portfolio",
+    title: "Fayis Kanthapuram — Ideas, made real.",
+    description,
+    url: "/",
+    siteName: "Fayis Kanthapuram",
+    locale: "en_US",
+    type: "website",
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Fayis Kanthapuram - MERN Stack Developer Portfolio",
+        alt: "Fayis Kanthapuram — Full Stack Developer",
       },
     ],
-    locale: "en_US",
-    type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Fayis Kanthapuram | MERN Stack Developer",
-    description: "I build highly scalable, interactive, and modern web applications.",
-    creator: "@FKanthapuram",
+    title: "Fayis Kanthapuram | Full Stack Developer",
+    description,
     images: ["/og-image.png"],
   },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
-  },
-  icons: {
-    icon: [
-      { url: '/favicon.ico' },
-      { url: '/icon.png', type: 'image/png' },
-    ],
-    apple: [
-      { url: '/apple-touch-icon.png' },
-    ],
-  },
-  manifest: '/manifest.webmanifest',
+  robots: { index: true, follow: true },
+  icons: { icon: "/icon.svg", apple: "/apple-icon" },
+  manifest: "/manifest.webmanifest",
 };
-
+export const viewport: Viewport = { themeColor: "#f5f3ec" };
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "Person",
-  name: "Fayis Kanthapuram",
-  jobTitle: "MERN Stack Developer",
-  url: "https://fayis-kanthapuram.vercel.app",
-  sameAs: [
-    "https://github.com/FayisKanthapuram",
-    "https://www.linkedin.com/in/fayis-kanthapuram/",
-    "https://x.com/FKanthapuram"
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": `${identity.url}/#person`,
+      name: identity.name,
+      alternateName: "Fayis",
+      jobTitle: "Full Stack Developer",
+      url: identity.url,
+      image: `${identity.url}/images/fayis-portrait.webp`,
+      sameAs: [identity.github, identity.linkedin, identity.twitter],
+      knowsAbout: [
+        "JavaScript",
+        "TypeScript",
+        "React",
+        "Node.js",
+        "MongoDB",
+        "PostgreSQL",
+      ],
+      address: {
+        "@type": "PostalAddress",
+        addressRegion: "Kerala",
+        addressCountry: "IN",
+      },
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${identity.url}/#website`,
+      url: identity.url,
+      name: "Fayis Kanthapuram | Full Stack Developer Portfolio",
+      author: { "@id": `${identity.url}/#person` },
+    },
   ],
-  knowsAbout: ["React", "Node.js", "Express", "MongoDB", "Next.js", "TypeScript", "Tailwind CSS"],
-  alumniOf: "Brototype"
 };
-
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className="dark">
-      <body
-        className={`${inter.variable} ${jetbrainsMono.variable} antialiased bg-black text-white min-h-screen`}
-      >
+    <html lang="en">
+      <body>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
+          }}
         />
         {children}
       </body>
